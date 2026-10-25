@@ -8,20 +8,21 @@ layout: null
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ site.title }}, {{ site.description }}</title>
   <meta name="description" content="{{ site.description }}">
+  <meta name="theme-color" content="#1f1612">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:wght@400;700&display=swap" rel="stylesheet">
   <!-- Font Awesome: paste your kit script here, e.g. <script src="https://kit.fontawesome.com/YOUR_KIT_ID.js" crossorigin="anonymous"></script> -->
-  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
 
-<header class="hero">
+<header class="wrap">
   <h1>{{ site.title }}</h1>
-  <p class="tagline">Stories and essays, set down one page at a time.</p>
+  <p class="lede">Write one or two sentences here about what you write.</p>
 </header>
 
-<main>
+<main class="wrap">
   <section id="work" aria-labelledby="work-h">
     <h2 id="work-h">Selected work</h2>
     <div class="grid">
@@ -29,7 +30,7 @@ layout: null
     {% for piece in pieces %}
       {% assign words = piece.content | strip_html | number_of_words %}
       <article class="card">
-        <p class="meta"><i class="fa-solid {% if piece.type == 'Essay' %}fa-feather-pointed{% else %}fa-book-open{% endif %}" aria-hidden="true"></i> {{ piece.type }}, {{ piece.year }}</p>
+        <p class="meta">{{ piece.type }}, {{ piece.year }}</p>
         <h3>{{ piece.title }}</h3>
         <p class="blurb">{{ piece.blurb }}</p>
         <button class="read" type="button" data-title="{{ piece.title | escape }}" data-meta="{{ piece.type }}, {{ piece.year }}, {{ words | divided_by: 200 | plus: 1 }} min read">Read</button>
@@ -50,7 +51,7 @@ layout: null
   </section>
 </main>
 
-<footer><p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}</p></footer>
+<footer class="wrap"><p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}</p></footer>
 
 <dialog id="reader" aria-labelledby="reader-title">
   <article class="sheet">
