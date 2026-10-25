@@ -1,0 +1,44 @@
+:root{
+  --bg:#1f1612; --card:#291d17; --line:#3f2e25;
+  --text:#e6d9bd; --muted:#a8977d; --oxblood:#6b2a26; --oxblood-hi:#833832;
+  --body:"Libre Caslon Text",Georgia,serif; --display:"Libre Caslon Display","Libre Caslon Text",Georgia,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1.1rem/1.75 var(--body)}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0}
+a{color:var(--text)}
+:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+
+.wrap{max-width:62rem;margin:0 auto;padding-left:1.5rem;padding-right:1.5rem}
+header{padding-top:5rem;padding-bottom:3rem}
+h1{font-size:clamp(2.6rem,7vw,4rem);line-height:1.1;margin-bottom:1rem}
+.lede{color:var(--muted);max-width:36rem;margin:0}
+
+section{padding:3rem 0;border-top:1px solid var(--line)}
+section>p{max-width:38rem;margin:0}
+h2{font-size:2rem;margin-bottom:1.75rem}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:1.5rem}
+.card{background:var(--card);border:1px solid var(--line);padding:1.75rem;display:flex;flex-direction:column}
+.card h3{font-size:1.65rem;line-height:1.2;margin:.35rem 0 .75rem}
+.meta{font-size:.9rem;color:var(--muted);margin:0}
+.blurb{margin:0 0 1.5rem;flex:1}
+
+button{cursor:pointer;font:400 1rem var(--body);color:var(--text);background:var(--oxblood);border:0;padding:.5rem 1.4rem;border-radius:2px}
+button:hover{background:var(--oxblood-hi)}
+.read{align-self:flex-start}
+
+footer{padding-top:2rem;padding-bottom:3rem;color:var(--muted);font-size:.95rem;border-top:1px solid var(--line)}
+footer p{margin:0}
+
+/* Reader: same ground, same ink */
+dialog{border:1px solid var(--line);padding:0;background:var(--card);color:var(--text);max-width:44rem;width:calc(100% - 2rem);max-height:90vh}
+dialog::backdrop{background:rgba(10,6,4,.88)}
+.sheet{position:relative;padding:3rem clamp(1.5rem,6vw,3.5rem);max-height:90vh;overflow:auto}
+.sheet h2{font-size:2.2rem;line-height:1.15;margin:.35rem 0 1.5rem}
+.text{font-size:1.15rem;line-height:1.85;max-width:34rem}
+.text p{margin:0 0 1.2em}
+.close{position:absolute;top:1rem;right:1rem;padding:.35rem .9rem}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
