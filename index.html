@@ -1,0 +1,66 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ site.title }}, {{ site.description }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+  <!-- Font Awesome: paste your kit script here, e.g. <script src="https://kit.fontawesome.com/YOUR_KIT_ID.js" crossorigin="anonymous"></script> -->
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+</head>
+<body>
+
+<header class="hero">
+  <h1>{{ site.title }}</h1>
+  <p class="tagline">Stories and essays, set down one page at a time.</p>
+</header>
+
+<main>
+  <section id="work" aria-labelledby="work-h">
+    <h2 id="work-h">Selected work</h2>
+    <div class="grid">
+    {% assign pieces = site.pieces | sort: "order" %}
+    {% for piece in pieces %}
+      {% assign words = piece.content | strip_html | number_of_words %}
+      <article class="card">
+        <p class="meta"><i class="fa-solid {% if piece.type == 'Essay' %}fa-feather-pointed{% else %}fa-book-open{% endif %}" aria-hidden="true"></i> {{ piece.type }}, {{ piece.year }}</p>
+        <h3>{{ piece.title }}</h3>
+        <p class="blurb">{{ piece.blurb }}</p>
+        <button class="read" type="button" data-title="{{ piece.title | escape }}" data-meta="{{ piece.type }}, {{ piece.year }}, {{ words | divided_by: 200 | plus: 1 }} min read">Read</button>
+        <template>{{ piece.content }}</template>
+      </article>
+    {% endfor %}
+    </div>
+  </section>
+
+  <section id="about" aria-labelledby="about-h">
+    <h2 id="about-h">About</h2>
+    <p>Write two or three sentences about yourself here: what you write, what draws you to it, and where your work has appeared.</p>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-h">
+    <h2 id="contact-h">Contact</h2>
+    <p><a href="mailto:you@example.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> you@example.com</a></p>
+  </section>
+</main>
+
+<footer><p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}</p></footer>
+
+<dialog id="reader" aria-labelledby="reader-title">
+  <article class="sheet">
+    <button class="close" type="button" aria-label="Close"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Close</button>
+    <p class="meta" id="reader-meta"></p>
+    <h2 id="reader-title"></h2>
+    <div class="text" id="reader-text"></div>
+  </article>
+</dialog>
+
+<script src="{{ '/assets/script.js' | relative_url }}"></script>
+</body>
+</html>

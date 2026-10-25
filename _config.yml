@@ -1,0 +1,10 @@
+title: Your Name
+description: Fiction and essays
+baseurl: ""   # leave empty for username.github.io; use "/repo-name" for a project site
+
+collections:
+  pieces:
+    output: false   # no separate page per piece; they open in the reader
+
+exclude:
+  - README.md
