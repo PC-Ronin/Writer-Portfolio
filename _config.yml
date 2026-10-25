@@ -1,6 +1,6 @@
 title: Your Name
 description: Fiction and essays
-baseurl: ""   # leave empty for username.github.io; use "/repo-name" for a project site
+baseurl: "/Writer-Portfolio"
 
 collections:
   pieces:
