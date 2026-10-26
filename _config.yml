@@ -1,7 +1,7 @@
 # Site settings. Edit the values after each colon.
-title: Your Name
-tagline: Fiction & essays
-description: Fiction and essays by Your Name.
+title: R. Dennis
+tagline: Creative Fiction & Academic Essays
+description: Writing Portfolio by R. Dennis.
 url: "https://pc-ronin.github.io"
 baseurl: "/Writer-Portfolio"     # use "" if your repo is named pc-ronin.github.io
 email: you@example.com
