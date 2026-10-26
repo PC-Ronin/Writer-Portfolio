@@ -4,64 +4,133 @@ layout: null
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ site.title }}, {{ site.description }}</title>
-  <meta name="description" content="{{ site.description }}">
-  <meta name="theme-color" content="#1f1612">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome: paste your kit script here, e.g. <script src="https://kit.fontawesome.com/YOUR_KIT_ID.js" crossorigin="anonymous"></script> -->
-  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ site.title }}, Writing Portfolio</title>
+<meta name="description" content="{{ site.description | escape }}">
+<link rel="canonical" href="{{ site.url }}{{ site.baseurl }}/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ site.title | escape }}, Writing Portfolio">
+<meta property="og:description" content="{{ site.description | escape }}">
+<meta property="og:url" content="{{ site.url }}{{ site.baseurl }}/">
+<meta name="twitter:card" content="summary">
+<!-- Link-preview image (disabled): save a 1200x630 image as assets/share.jpg, then delete this line and the "end" line below.
+<meta property="og:image" content="{{ site.url }}{{ '/assets/share.jpg' | relative_url }}">
+end link-preview image -->
+<!-- Favicon (disabled): save a square image (at least 180x180) as assets/favicon.png, then delete this line and the "end" line below.
+<link rel="icon" href="{{ '/assets/favicon.png' | relative_url }}">
+<link rel="apple-touch-icon" href="{{ '/assets/favicon.png' | relative_url }}">
+end favicon -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Active fonts: Fraunces (headers, italic) and Newsreader (body). -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,480;1,9..144,400;1,9..144,480&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+<!-- Font options. To switch: replace the link above, then change the font variable in assets/style.css (--head for headers, --body for text).
+     If a font lacks the weight the stylesheet asks for, the browser uses the nearest one.
+  HEADERS (all have a good italic)
+  Fraunces (default, soft and sturdy):     family=Fraunces:ital,opsz,wght@0,9..144,480;1,9..144,400;1,9..144,480
+  Cormorant Garamond (elegant, light):     family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600
+  Playfair Display (high contrast):        family=Playfair+Display:ital,wght@0,400;1,400;1,500
+  DM Serif Display (bold, decorative):     family=DM+Serif+Display:ital@0;1
+  Bodoni Moda (fashion-magazine):          family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400
+  Libre Caslon Text (classic book):        family=Libre+Caslon+Text:ital,wght@0,400;1,400
+  BODY
+  Newsreader (default):                    family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500
+  EB Garamond:                             family=EB+Garamond:ital,wght@0,400;0,500;1,400
+  Lora:                                    family=Lora:ital,wght@0,400;0,500;1,400
+  Source Serif 4:                          family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400
+  Each one is used as https://fonts.googleapis.com/css2?THE-TEXT-ABOVE&display=swap
+-->
+<!-- Font Awesome (disabled until you add your kit code): replace YOUR_KIT_CODE with your kit's code (fontawesome.com > Kits), then delete this line and the "end" line below. Icons stay blank until then.
+<script src="https://kit.fontawesome.com/YOUR_KIT_CODE.js" crossorigin="anonymous" defer></script>
+end Font Awesome -->
+<link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
 </head>
 <body>
+<div class="page">
+  <header class="site-header">
+    <a class="brand" href="#top">{{ site.title }}</a>
+    <nav><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+  </header>
 
-<header class="wrap">
-  <h1>{{ site.title }}</h1>
-  <p class="lede">Write one or two sentences here about what you write.</p>
-</header>
+  <div class="hero" id="top">
+    <i class="fa-solid fa-feather-pointed hero-ico" aria-hidden="true"></i>
+    <h1>{{ site.title }}</h1>
+    <p>{{ site.tagline | escape }}</p>
+    <div class="orn"><i></i></div>
+  </div>
 
-<main class="wrap">
-  <section id="work" aria-labelledby="work-h">
-    <h2 id="work-h">Selected work</h2>
+  <section id="work" aria-labelledby="h-work">
+    <h2 class="sec-title" id="h-work">Selected work</h2>
+    <!-- FILTER (disabled): to enable, delete this line and the "end" line below. Also enable the filter blocks in assets/script.js and assets/style.css.
+    <div class="filters" role="group" aria-label="Filter work">
+      <button type="button" class="filter on" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="filter" data-filter="fiction" aria-pressed="false">Fiction</button>
+      <button type="button" class="filter" data-filter="essay" aria-pressed="false">Essays</button>
+    </div>
+    end FILTER -->
     <div class="grid">
     {% assign pieces = site.pieces | sort: "order" %}
     {% for piece in pieces %}
+      {% assign kind = piece.type | downcase %}
+      {% if kind != "essay" %}{% assign kind = "fiction" %}{% endif %}
       {% assign words = piece.content | strip_html | number_of_words %}
-      <article class="card">
-        <p class="meta">{{ piece.type }}, {{ piece.year }}</p>
-        <h3>{{ piece.title }}</h3>
-        <p class="blurb">{{ piece.blurb }}</p>
-        <button class="read" type="button" data-title="{{ piece.title | escape }}" data-meta="{{ piece.type }}, {{ piece.year }}, {{ words | divided_by: 200 | plus: 1 }} min read">Read</button>
+      <button class="card {{ kind }}" type="button" aria-haspopup="dialog" data-slug="{{ piece.slug }}" data-title="{{ piece.title | escape }}" data-type="{{ kind }}" data-year="{{ piece.year }}" data-note="{{ piece.note | escape }}" data-words="{{ words }}">{% comment %} THEME ICON (disabled): to enable, add this inside the tag above: data-theme="{{ piece.theme }}" {% endcomment %}
+        <!-- THEME ICON (disabled): this is where the roman numeral used to be. To enable, delete this line and the "end" line below, add data-theme (see the note on the button tag), and enable the THEME ICONS blocks in assets/script.js and assets/style.css.
+        <span class="card-icon" aria-hidden="true"></span>
+        end THEME ICON -->
+        <span class="card-type"><i class="fa-solid {% if kind == 'essay' %}fa-pen-nib{% else %}fa-book-open{% endif %}" aria-hidden="true"></i>{{ kind | capitalize }}{% if piece.year %}, {{ piece.year }}{% endif %}</span>
+        <span class="card-title">{{ piece.title }}</span>
+        {% if piece.note %}<span class="card-note"><i class="fa-solid fa-award" aria-hidden="true"></i>{{ piece.note }}</span>{% endif %}
+        <span class="card-excerpt">{% if piece.blurb %}{{ piece.blurb }}{% else %}{{ piece.content | strip_html | truncatewords: 28 }}{% endif %}</span>
+        <span class="card-read">Read</span>
         <template>{{ piece.content }}</template>
-      </article>
+      </button>
     {% endfor %}
     </div>
   </section>
 
-  <section id="about" aria-labelledby="about-h">
-    <h2 id="about-h">About</h2>
-    <p>Write two or three sentences about yourself here: what you write, what draws you to it, and where your work has appeared.</p>
+  <section id="about" aria-labelledby="h-about">
+    <h2 class="sec-title" id="h-about">About</h2>
+    <div class="about">
+      <div>
+        {% for p in site.about %}{{ p | markdownify }}{% endfor %}
+      </div>
+      {% if site.recognition %}
+      <aside>
+        <h3>Recognition</h3>
+        {% for r in site.recognition %}<p><b><i class="fa-solid fa-award" aria-hidden="true"></i>{{ r.title }}</b>{{ r.detail }}</p>{% endfor %}
+      </aside>
+      {% endif %}
+    </div>
   </section>
 
-  <section id="contact" aria-labelledby="contact-h">
-    <h2 id="contact-h">Contact</h2>
-    <p><a href="mailto:you@example.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> you@example.com</a></p>
+  <section id="contact" class="contact" aria-labelledby="h-contact">
+    <h2 class="sec-title" id="h-contact">Contact</h2>
+    <p>For questions or collaboration:</p>
+    <ul class="links">
+      {% if site.email %}<li><a href="mailto:{{ site.email }}"><i class="fa-solid fa-envelope" aria-hidden="true"></i>{{ site.email }}</a></li>{% endif %}
+      {% if site.github %}<li><a href="https://github.com/{{ site.github }}"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a></li>{% endif %}
+    </ul>
   </section>
-</main>
 
-<footer class="wrap"><p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}</p></footer>
+  <footer>
+    <div class="orn"><i></i></div>
+    <span>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}</span>
+  </footer>
+</div>
 
-<dialog id="reader" aria-labelledby="reader-title">
-  <article class="sheet">
-    <button class="close" type="button" aria-label="Close"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Close</button>
-    <p class="meta" id="reader-meta"></p>
-    <h2 id="reader-title"></h2>
-    <div class="text" id="reader-text"></div>
-  </article>
-</dialog>
+<div class="backdrop" id="backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" id="modal">
+    <button class="close" id="close" aria-label="Close">&times;</button>
+    <p class="m-type" id="mType"></p>
+    <h2 class="m-title" id="mTitle"></h2>
+    <p class="m-note" id="mNote"></p>
+    <div class="m-body" id="mBody"></div>
+    <p class="m-count" id="mCount"></p>
+  </div>
+</div>
 
-<script src="{{ '/assets/script.js' | relative_url }}"></script>
+<script src="{{ '/assets/script.js' | relative_url }}" defer></script>
 </body>
 </html>

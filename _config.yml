@@ -1,10 +1,20 @@
-title: R Dennis
-description: Fiction and essays
-baseurl: "/Writer-Portfolio"
+# Site settings. Edit the values after each colon.
+title: Your Name
+tagline: Fiction & essays
+description: Fiction and essays by Your Name.
+url: "https://pc-ronin.github.io"
+baseurl: "/Writer-Portfolio"     # use "" if your repo is named pc-ronin.github.io
+email: you@example.com
+github: your-username            # your GitHub username; leave empty to hide the link
+
+about:
+  - "A few sentences about who you are and what draws you to fiction go here. Mention where the essays came from, and what you hope a reader takes away."
+  - "A second short paragraph can say what you're working on now, or what you're looking for next."
+
+recognition:                     # delete this whole block to hide the box
+  - title: Young Authors Award
+    detail: Short story, 2010
 
 collections:
   pieces:
-    output: false   # no separate page per piece; they open in the reader
-
-exclude:
-  - README.md
+    output: false                # pieces open in the reader, not on their own pages

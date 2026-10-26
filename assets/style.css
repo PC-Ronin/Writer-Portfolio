@@ -1,44 +1,116 @@
+/* Dark Literary theme. Colors live in :root below. */
 :root{
-  --bg:#1f1612; --card:#291d17; --line:#3f2e25;
-  --text:#e6d9bd; --muted:#a8977d; --oxblood:#6b2a26; --oxblood-hi:#833832;
-  --body:"Libre Caslon Text",Georgia,serif; --display:"Libre Caslon Display","Libre Caslon Text",Georgia,serif;
+  --bg:#1B1815;--raised:#221E19;--text:#E8E1D3;--heading:#F2ECDD;--muted:#A69E8E;
+  --amber:#B8863B;--oxblood:#8C4A52;--border:#3A332B;--line:#5C4B33;
+  --fiction:var(--amber);--essay:var(--oxblood);      /* accent color per type: swap here */
+  --paper:#E8DCC0;--ink:#2A2018;--ink-muted:#6B5A43;  /* reading pane: parchment page */
+  --col:1100px;                                       /* width of the content column */
+  /* Fonts (the Google Fonts link in index.html must match; options are listed there). */
+  --head:'Fraunces',Georgia,serif;
+  --body:'Newsreader',Georgia,serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font:400 1.1rem/1.75 var(--body)}
-h1,h2,h3{font-family:var(--display);font-weight:400;margin:0}
-a{color:var(--text)}
-:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1rem/1.6 var(--body);font-variant-numeric:oldstyle-nums;position:relative}
+body.lock{overflow:hidden}
+/* atmosphere: paper grain + vignette */
+body::before,body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0}
+body::before{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .9 0 0 0 0 .85 0 0 0 0 .7 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body::after{background:radial-gradient(ellipse at 50% 25%,transparent 35%,rgba(0,0,0,.5) 100%)}
+.page{position:relative;z-index:1;max-width:var(--col);margin:0 auto;padding:2rem 1.5rem 4rem}
+a{color:inherit}
+:focus-visible{outline:1px solid var(--amber);outline-offset:3px}
 
-.wrap{max-width:62rem;margin:0 auto;padding-left:1.5rem;padding-right:1.5rem}
-header{padding-top:5rem;padding-bottom:3rem}
-h1{font-size:clamp(2.6rem,7vw,4rem);line-height:1.1;margin-bottom:1rem}
-.lede{color:var(--muted);max-width:36rem;margin:0}
+/* ornament: hairlines with a small diamond (main page only) */
+.orn{display:flex;align-items:center;gap:.9rem;color:var(--amber)}
+.orn::before,.orn::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line))}
+.orn::after{transform:scaleX(-1)}
+.orn i{width:7px;height:7px;border:1px solid currentColor;transform:rotate(45deg)}
 
-section{padding:3rem 0;border-top:1px solid var(--line)}
-section>p{max-width:38rem;margin:0}
-h2{font-size:2rem;margin-bottom:1.75rem}
+.site-header{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.brand{font:italic 480 1.05rem var(--head);color:var(--heading);text-decoration:none}
+.site-header nav a{margin-left:1.5rem;color:var(--muted);text-decoration:none;font-size:.95rem}
+.site-header nav a:hover{color:var(--amber)}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:1.5rem}
-.card{background:var(--card);border:1px solid var(--line);padding:1.75rem;display:flex;flex-direction:column}
-.card h3{font-size:1.65rem;line-height:1.2;margin:.35rem 0 .75rem}
-.meta{font-size:.9rem;color:var(--muted);margin:0}
-.blurb{margin:0 0 1.5rem;flex:1}
+.hero{text-align:center;padding:5rem 0 5.5rem;animation:settle .9s ease-out both}
+.hero-ico{display:block;font-size:1.7rem;color:var(--amber);margin-bottom:1.1rem}
+.hero h1{font:italic 480 clamp(2.6rem,8vw,4.6rem)/1.1 var(--head);color:var(--heading);margin:0 0 .7rem}
+.hero p{color:var(--muted);font-size:1.1rem;margin:0 0 2rem}
+.hero .orn{width:180px;margin:0 auto}
+@keyframes settle{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-button{cursor:pointer;font:400 1rem var(--body);color:var(--text);background:var(--oxblood);border:0;padding:.5rem 1.4rem;border-radius:2px}
-button:hover{background:var(--oxblood-hi)}
-.read{align-self:flex-start}
+section{margin-bottom:6rem}
+.sec-title{display:flex;align-items:center;gap:1.25rem;font:italic 400 1.6rem var(--head);color:var(--heading);margin:0 0 2rem}
+.sec-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
 
-footer{padding-top:2rem;padding-bottom:3rem;color:var(--muted);font-size:.95rem;border-top:1px solid var(--line)}
-footer p{margin:0}
+/* Card grid: as many columns as fit, never fewer than 15rem each, never more than 4 */
+.grid{--gap:1.5rem;display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(max(15rem,calc((100% - 3 * var(--gap)) / 4)),1fr))}
+.card{position:relative;text-align:left;font:inherit;color:inherit;cursor:pointer;display:flex;flex-direction:column;gap:.85rem;padding:1.7rem 1.5rem;background:linear-gradient(180deg,#241F1A,#1F1B16);border:1px solid var(--border);border-left:2px solid var(--tc);transition:border-color .2s}
+.card.fiction{--tc:var(--fiction)}.card.essay{--tc:var(--essay)}
+.card>span{display:block}
+.card:hover,.card:focus-visible{outline:none;background:#2D2620}
+.card:focus-visible{border-color:var(--tc)}
+.card-type{font-size:.85rem;color:var(--tc)}
+.card-title{font:italic 480 1.35rem/1.25 var(--head);color:var(--heading)}
+.card-note{font-size:.85rem;color:var(--amber);margin-top:-.4rem}
+.card-excerpt{font-size:.98rem;line-height:1.55}
+.card-read{margin-top:auto;padding-top:.4rem;font-size:.9rem;color:var(--muted)}
+.card-read::after{content:"";display:block;width:1.2rem;height:1px;margin-top:.35rem;background:currentColor;transition:width .25s}
+.card:hover .card-read,.card:focus-visible .card-read{color:var(--tc)}
+.card:hover .card-read::after,.card:focus-visible .card-read::after{width:2.8rem}
+.card[hidden]{display:none}
 
-/* Reader: same ground, same ink */
-dialog{border:1px solid var(--line);padding:0;background:var(--card);color:var(--text);max-width:44rem;width:calc(100% - 2rem);max-height:90vh}
-dialog::backdrop{background:rgba(10,6,4,.88)}
-.sheet{position:relative;padding:3rem clamp(1.5rem,6vw,3.5rem);max-height:90vh;overflow:auto}
-.sheet h2{font-size:2.2rem;line-height:1.15;margin:.35rem 0 1.5rem}
-.text{font-size:1.15rem;line-height:1.85;max-width:34rem}
-.text p{margin:0 0 1.2em}
-.close{position:absolute;top:1rem;right:1rem;padding:.35rem .9rem}
+/* ---- THEME ICONS (disabled): to enable, delete this line and the "end" line below (index.html and script.js have matching blocks) ----
+.card-icon{position:absolute;top:.9rem;right:1.2rem;font-size:1.6rem;line-height:1;color:var(--tc);opacity:.55}
+.card-title{padding-right:2.5rem}
+---- end THEME ICONS ---- */
 
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* ---- FILTER (disabled): to enable, delete this line and the "end" line below (index.html and script.js have matching blocks) ----
+.filters{display:flex;gap:.6rem;margin:-.75rem 0 1.75rem}
+.filter{font:inherit;font-size:.95rem;color:var(--muted);background:none;border:1px solid var(--border);padding:.3rem 1.1rem;cursor:pointer}
+.filter:hover{color:var(--heading)}
+.filter.on{color:var(--heading);border-color:var(--amber)}
+---- end FILTER ---- */
+
+.about{display:grid;grid-template-columns:1.6fr 1fr;gap:2.5rem}
+.about p{margin:0 0 1em;max-width:58ch;font-size:1.05rem;line-height:1.75}
+.about aside{border-left:1px solid var(--line);padding-left:1.5rem}
+.about h3{font:italic 400 1.1rem var(--head);color:var(--heading);margin:0 0 .5rem}
+.about aside p{font-size:.95rem;color:var(--muted);margin:0}
+.about aside b{display:block;color:var(--amber);font-weight:500}
+.contact p{font-size:1.05rem;margin:0 0 .5rem}
+.contact a{color:var(--amber);text-underline-offset:4px}
+footer{text-align:center;color:var(--muted);font-size:.85rem}
+footer .orn{width:40%;margin:0 auto 1.2rem}
+@media(max-width:640px){.about{grid-template-columns:1fr}.about aside{border-left:0;border-top:1px solid var(--line);padding:1.2rem 0 0}.hero{padding:3.5rem 0 4rem}}
+
+.card-type i,.card-note i,.m-type i,.m-note i,.m-count i{margin-right:.5em}
+.about aside b i{margin-right:.5em}
+.links{display:flex;flex-wrap:wrap;gap:.6rem 2rem;margin:0;padding:0;list-style:none}
+.links a{color:var(--text);text-decoration:none;font-size:1.05rem}
+.links a:hover{color:var(--amber)}
+.links i{color:var(--amber);margin-right:.6em;width:1.1em;text-align:center}
+
+/* reading pane: a parchment page on a flat dark backdrop; no dividers */
+.backdrop{position:fixed;inset:0;z-index:10;display:none;justify-content:center;align-items:flex-start;padding:4vh 1.25rem;overflow-y:auto;overscroll-behavior:contain;background:rgba(10,8,6,.93)}
+.backdrop.open{display:flex}
+.modal{position:relative;width:100%;max-width:660px;padding:3.5rem 3.25rem 2.5rem;background:var(--paper);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.6);animation:rise .25s ease-out}
+.modal.fiction{--tc:#7A5A22}.modal.essay{--tc:var(--essay)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.close{position:absolute;top:1.1rem;right:1.4rem;background:none;border:0;color:var(--ink-muted);font:1.5rem/1 var(--body);cursor:pointer}
+.close:hover{color:var(--ink)}
+.m-type{font-size:.85rem;margin:0 0 .5rem;color:var(--tc)}
+.m-title{font:italic 480 2.1rem/1.2 var(--head);color:var(--ink);margin:0 0 .4rem}
+.m-note{color:var(--ink-muted);font-size:.9rem;margin:0}
+.m-body{margin-top:2rem}
+.m-body p{font-size:1.08rem;line-height:1.8;max-width:62ch;text-wrap:pretty;hyphens:auto}
+.m-body.fiction p{margin:0;text-indent:1.5em}
+.m-body.essay p{margin:0 0 1.2em}
+.m-body>p:first-child{text-indent:0}
+.m-body>p:first-child::first-letter{float:left;font:480 3.7em/.82 var(--head);padding:.08em .1em 0 0;color:var(--tc)}
+/* scene break: one blank line, as in a printed book (1.08rem x 1.8 line height); the next paragraph is not indented */
+.m-body hr{border:0;margin:0;height:1.94rem}
+.m-body hr+p{text-indent:0}
+.m-count{text-align:center;color:var(--ink-muted);font-size:.8rem;margin:2.5rem 0 0}
+@media(max-width:640px){.modal{padding:3rem 1.5rem 2rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero,.modal{animation:none}}
